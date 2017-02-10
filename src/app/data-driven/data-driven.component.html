@@ -1,3 +1,41 @@
-<p>
-  data-driven works!
-</p>
+<h2>Data Driven</h2>
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+  <div formGroupName="userData">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" formControlName="username">
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="!myForm.controls.userData.controls.username.valid">Invalid username</div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" class="form-control" formControlName="email">
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="!myForm.controls.userData.controls.email.valid">Invalid email address</div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="text" id="password" class="form-control" formControlName="password">
+  </div>
+
+  <div class="radio">
+    <label *ngFor="let g of genders">
+      <input type="radio" [value]="g" formControlName="gender">
+      {{g}}
+    </label>
+  </div>
+
+  <div formArrayName="hobbies">
+    <h3>Hobbies</h3>
+    <div class="form-group" *ngFor="let h of myForm.controls.hobbies.controls; let i = index">
+      <input type="text" class="form-control" id="hobby" formControlName="{{i}}">
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-default" (click)="onAddHobby()">Add Hobby</button>
+  <button type="submit" class="btn btn-default" [disabled]="!myForm.valid">Submit</button>
+
+</form>

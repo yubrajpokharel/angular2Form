@@ -8,9 +8,18 @@ import {NgForm} from "@angular/forms";
 })
 export class TemplateDrivenComponent{
 
+  user = {
+    username:"Yubraj",
+    email:"yubraj@gmail.com",
+    password:"asdfasdf",
+    gender: "male"
+  }
+  
+  genders = ["male", "female"];
+
   constructor() { }
 
   onSubmit(form: NgForm){
-    console.log(form);
+    console.log(form.value);
   }
 }

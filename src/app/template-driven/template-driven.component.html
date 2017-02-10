@@ -1,25 +1,35 @@
 <h2>Template Driven</h2>
 <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-  <div class="form-group">
-    <label for="username">Username: </label>
-    <input type="text" class="form-control"
-           id="username"
-           ngModel name="username" required>
-  </div>
-  <div class="form-group">
-    <label for="email">Email: </label>
-    <input type="email" class="form-control"
-           id="email"
-           ngModel name="email" required>
+  <div ngModelGroup = "userData">
+    <div class="form-group">
+      <label for="username">Username: </label>
+      <input type="text" class="form-control"
+             minlength="4"
+             id="username"
+             [(ngModel)]="user.username" name="username" required
+             #username="ngModel">
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="!username.valid">Invalid username</div>
+    <div class="form-group">
+      <label for="email">Email: </label>
+      <input type="text" class="form-control"
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+             id="email"
+             [(ngModel)]="user.email" name="email" required
+             #email="ngModel">
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="!email.valid">Invalid email address</div>
   </div>
   <div class="form-group">
     <label for="password">Password: </label>
     <input type="password" class="form-control"
            id="password"
-           ngModel name="password" required>
+           [(ngModel)]="user.password" name="password" required>
   </div>
-  <div class="radio">
-    <label></label>
+  <div class="radio" *ngFor="let g of genders">
+    <label>
+      <input type="radio" [(ngModel)] = "user.gender" name="gender" [value]="g"> {{g}}
+    </label>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
 </form>
